@@ -7,7 +7,7 @@ from datetime import datetime
 from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
-df = pd.read_csv("MLStuff/beirut_weather.csv")
+df = pd.read_csv("beirut_weather.csv")
 
 df["time"] = pd.to_datetime(df["time"])
 

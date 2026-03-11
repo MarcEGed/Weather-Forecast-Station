@@ -21,6 +21,29 @@ void clear_display(){
   display.clearDisplay();
 }
 
+void draw_choice_screen(int countdown) {
+  display.clearDisplay();
+
+  display.drawLine(1, 12, 127, 12, 1);
+
+  display.setTextColor(1);
+  display.setTextWrap(false);
+  display.setCursor(75, 2);
+  display.print("boot mode");
+
+  display.setCursor(2, 15);
+  display.print("Press button to enter");
+
+  display.setCursor(20, 27);
+  display.print("offline mode...");
+
+  display.setTextSize(1);
+  display.setCursor(55, 40);
+  display.print(countdown);
+
+  display.display();
+}
+
 void draw_connecting_screen(){
   display.clearDisplay();
   display.drawBitmap(55, 21, image_wifi_3_bars_bits, 19, 16, 1);

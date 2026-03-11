@@ -13,6 +13,7 @@ extern Adafruit_SSD1306 display;
 void initialize_screen();
 void draw_test(float conditions[]);
 void clear_display();
+void draw_choice_screen(int countdown);
 void draw_live(int conditions[], String fetchedTime);
 void draw_connecting_screen();
 void draw_sleep_screen();

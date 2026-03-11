@@ -3,9 +3,9 @@
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "pool.ntp.org", 7200, 60000);
 
-const char* ssid = "i'd like to think";
-const char* password = "im smarter than to put ";
-const char* serverIP = "my credentials on the internet"; 
+const char* ssid = "not";
+const char* password = "online friendly";
+const char* serverIP = "data"; 
 const int serverPort = 6000;
 
 WiFiClient client;

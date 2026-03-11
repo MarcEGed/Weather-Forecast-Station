@@ -8,6 +8,8 @@
 #include "save_temps.h"
 
 extern unsigned long last_Interaction;
+extern bool offlineMode;
+extern const int OFFLINE_BTN;
 
 struct Task {
     void (*func)();          
@@ -18,6 +20,7 @@ struct Task {
 void addTask(void (*f)(), unsigned long intervalMs);
 void runScheduler();
 
+void updateMode();
 void readSensors();
 void updatePrediction();
 void updateDisplay();

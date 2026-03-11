@@ -12,6 +12,10 @@ int current_Mode = 0; //0=LIVE, 1=PREDICTION
 unsigned long last_Interaction = 0;
 int last_Hour = -1;
 
+bool offlineMode = false;
+const int OFFLINE_BTN = WAKE_BTN; // your pushbutton pin
+const unsigned long OFFLINE_TIMEOUT = 10000; // 10 seconds
+
 void addTask(void (*f)(), unsigned long intervalMs){
     tasks[num_Tasks].func = f;
     tasks[num_Tasks].interval = intervalMs;
@@ -26,6 +30,35 @@ void runScheduler(){
             tasks[i].func();
             tasks[i].last_Ran = now;
         }
+    }
+}
+
+void updateMode(){
+    Serial.println("Press the button in 10 seconds to enter offline mode...");
+    unsigned long start = millis();
+    int lastShown = -1;
+
+    while (millis() - start < OFFLINE_TIMEOUT) {
+        if (digitalRead(OFFLINE_BTN) == LOW) {
+            offlineMode = true;
+            Serial.println("Offline mode enabled!");
+            break;
+        }
+
+        //Get remaining seconds
+        int remaining = 10 - ((millis() - start) / 1000);
+
+        //update if num changes
+        if (remaining != lastShown && remaining >= 0) {
+            lastShown = remaining;
+            draw_choice_screen(remaining);
+        }
+
+        delay(20);
+    }
+
+    if (!offlineMode) {
+        Serial.println("Online mode");
     }
 }
 
@@ -56,6 +89,7 @@ void readSensors(){
 }
 
 void updatePrediction(){
+    if (offlineMode) return;
     float norm_hour = normalize_hour(get_hour());
     float norm_day  = normalize_day(get_day());
     next_HourPred = predict_NextHour(temps, norm_hour, norm_day);
